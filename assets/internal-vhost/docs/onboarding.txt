@@ -1,0 +1,10 @@
+Lapin Logistics — IT Onboarding Checklist
+=========================================
+
+1. Collect your laptop and badge from Facilities (Warehouse 7).
+2. Email is firstname.lastname@lapinlogistics.com — IT provisions it on day 1.
+3. Connect to the office network and run the VPN setup guide.
+4. Set a strong password. Do NOT reuse your personal passwords.
+5. File expenses through the policy linked on the directory page.
+
+Welcome to the warren.

@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /backup/
+Disallow: /old/
+Disallow: /dev/
+Disallow: /test/
+Disallow: /warren/
+Disallow: /internal/
+Disallow: /carrot-cms/

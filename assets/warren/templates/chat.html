@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>#{{ current.name }} · The Warren</title>
+<style>
+  :root{
+    --sidebar:#3f0e40; --sidebar2:#350d36; --sidebar-ink:#cfc3cf;
+    --sidebar-active:#1164a3; --sidebar-hover:#4a214b;
+    --topline:#e2e2e4; --ink:#1d1c1d; --muted:#616061;
+    --bg:#ffffff; --hover:#f8f8f8;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0; font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,
+    sans-serif; color:var(--ink); display:flex; height:100vh; overflow:hidden;
+  }
+
+  /* ---- sidebar ---- */
+  .sidebar{
+    width:260px; flex:0 0 260px; background:var(--sidebar);
+    color:var(--sidebar-ink); display:flex; flex-direction:column;
+  }
+  .ws-head{
+    padding:14px 16px; border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex; align-items:center; gap:9px;
+  }
+  .ws-logo{
+    width:30px; height:30px; border-radius:8px; flex:0 0 30px;
+    background:linear-gradient(135deg,#611f69,#4a154b);
+    display:flex; align-items:center; justify-content:center; font-size:.95rem;
+  }
+  .ws-name{font-weight:800; color:#fff; font-size:1.02rem; line-height:1.1;}
+  .ws-sub{font-size:.72rem; color:var(--sidebar-ink); opacity:.8;}
+  .sec{padding:14px 18px 6px; font-size:.74rem; text-transform:uppercase;
+    letter-spacing:.6px; opacity:.7;}
+  .chan-list{list-style:none; margin:0; padding:0 8px; overflow-y:auto; flex:1;}
+  .chan-list a{
+    display:block; text-decoration:none; color:var(--sidebar-ink);
+    padding:6px 12px; border-radius:6px; font-size:.95rem; margin-bottom:1px;
+  }
+  .chan-list a:hover{background:var(--sidebar-hover);}
+  .chan-list a.active{background:var(--sidebar-active); color:#fff; font-weight:700;}
+  .chan-list a .hash{opacity:.6; margin-right:5px;}
+  .me-bar{
+    padding:12px 16px; border-top:1px solid rgba(255,255,255,.08);
+    display:flex; align-items:center; gap:10px; font-size:.85rem;
+  }
+  .me-av{
+    width:30px; height:30px; border-radius:7px; flex:0 0 30px; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:.78rem;
+  }
+  .me-bar .nm{color:#fff; font-weight:700; line-height:1.1;}
+  .me-bar .lo{color:var(--sidebar-ink); font-size:.72rem; text-decoration:none;}
+  .me-bar .lo:hover{text-decoration:underline; color:#fff;}
+
+  /* ---- main ---- */
+  .main{flex:1; display:flex; flex-direction:column; min-width:0; background:var(--bg);}
+  .chan-head{
+    padding:12px 22px; border-bottom:1px solid var(--topline);
+    display:flex; align-items:baseline; gap:14px;
+  }
+  .chan-title{font-weight:900; font-size:1.05rem;}
+  .chan-title .hash{color:var(--muted); font-weight:700;}
+  .chan-topic{color:var(--muted); font-size:.85rem;}
+  .feed{flex:1; overflow-y:auto; padding:16px 22px 28px;}
+  .day{
+    text-align:center; margin:18px 0; position:relative; color:var(--muted);
+    font-size:.78rem; font-weight:700;
+  }
+  .day:before{
+    content:""; position:absolute; left:0; right:0; top:50%;
+    border-top:1px solid var(--topline); z-index:0;
+  }
+  .day span{background:var(--bg); padding:0 12px; position:relative; z-index:1;}
+  .msg{display:flex; gap:11px; padding:7px 6px; border-radius:8px;}
+  .msg:hover{background:var(--hover);}
+  .av{
+    width:38px; height:38px; flex:0 0 38px; border-radius:9px; color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:.82rem;
+  }
+  .body{min-width:0;}
+  .meta{display:flex; align-items:baseline; gap:8px; margin-bottom:1px;}
+  .author{font-weight:800; font-size:.95rem;}
+  .role{font-size:.7rem; color:#fff; background:#868686; padding:1px 6px;
+    border-radius:4px; font-weight:700;}
+  .ts{font-size:.72rem; color:var(--muted);}
+  .text{font-size:.95rem; line-height:1.46; color:#1d1c1d; word-wrap:break-word;}
+  .text .em{color:#1264a3;}
+  .composer{
+    margin:0 22px 20px; border:1px solid #c9c8cc; border-radius:10px;
+    padding:11px 14px; color:var(--muted); font-size:.92rem;
+    display:flex; align-items:center; gap:10px;
+  }
+  .composer .plus{
+    width:22px; height:22px; border-radius:5px; background:#efefef;
+    display:flex; align-items:center; justify-content:center; font-weight:800;
+  }
+</style>
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="ws-head">
+      <div class="ws-logo">🐇</div>
+      <div>
+        <div class="ws-name">The Warren</div>
+        <div class="ws-sub">Lapin Logistics</div>
+      </div>
+    </div>
+    <div class="sec">Channels</div>
+    <ul class="chan-list">
+      {% for c in channels %}
+        <li>
+          <a href="/chat/{{ c.name }}"
+             class="{{ 'active' if c.name == current.name else '' }}">
+            <span class="hash">#</span>{{ c.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="me-bar">
+      <div class="me-av" style="background:{{ me_color }}">{{ me_initials }}</div>
+      <div>
+        <div class="nm">{{ me_name }}</div>
+        <a class="lo" href="/logout">@{{ me }} · Sign out</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="main">
+    <header class="chan-head">
+      <div class="chan-title"><span class="hash">#</span>{{ current.name }}</div>
+      <div class="chan-topic">{{ current.topic }}</div>
+    </header>
+    <div class="feed">
+      {% set ns = namespace(day="") %}
+      {% for m in messages %}
+        {% set thisday = m.time.split(" ")[0] %}
+        {% if thisday != ns.day %}
+          {% set ns.day = thisday %}
+          <div class="day"><span>{{ thisday }}</span></div>
+        {% endif %}
+        <div class="msg">
+          <div class="av" style="background:{{ m.color }}">{{ m.initials }}</div>
+          <div class="body">
+            <div class="meta">
+              <span class="author">{{ m.name }}</span>
+              {% if m.role %}<span class="role">{{ m.role }}</span>{% endif %}
+              <span class="ts">{{ m.time }}</span>
+            </div>
+            <div class="text">{{ m.text }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="composer">
+      <span class="plus">+</span>
+      <span>Message #{{ current.name }}</span>
+    </div>
+  </section>
+</body>
+</html>

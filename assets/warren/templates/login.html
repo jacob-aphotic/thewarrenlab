@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · The Warren</title>
+<style>
+  :root{
+    --bg:#f4f3f7; --card:#ffffff; --ink:#1d1c1d; --muted:#616061;
+    --line:#e2e2e4; --brand:#4a154b; --brand2:#611f69; --accent:#1264a3;
+    --err-bg:#fdeceb; --err-line:#e0998f; --err-ink:#9a2c1f;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; min-height:100vh; font-family:-apple-system,"Segoe UI",
+    Roboto,Helvetica,Arial,sans-serif; color:var(--ink);
+    background:linear-gradient(160deg,#f7f4f8 0%,#efeaf2 100%);
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .wrap{width:100%; max-width:420px;}
+  .brand{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:26px;}
+  .logo{
+    width:34px; height:34px; border-radius:9px;
+    background:linear-gradient(135deg,var(--brand),var(--brand2));
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+  }
+  .brand h1{font-size:1.35rem; margin:0; letter-spacing:-.3px;}
+  .card{
+    background:var(--card); border:1px solid var(--line);
+    border-radius:14px; padding:34px 32px;
+    box-shadow:0 12px 34px rgba(29,28,29,.07);
+  }
+  .card h2{margin:0 0 4px; font-size:1.25rem; letter-spacing:-.3px;}
+  .card .lede{margin:0 0 24px; color:var(--muted); font-size:.92rem;}
+  label{display:block; font-size:.82rem; font-weight:700; margin:16px 0 6px;}
+  input{
+    width:100%; padding:11px 13px; font-size:1rem; color:var(--ink);
+    border:1px solid #c9c8cc; border-radius:8px; background:#fff;
+  }
+  input:focus{outline:none; border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(18,100,163,.15);}
+  button{
+    width:100%; margin-top:24px; padding:12px; font-size:1rem;
+    font-weight:800; color:#fff; border:none; border-radius:8px;
+    background:var(--brand); cursor:pointer; letter-spacing:.2px;
+  }
+  button:hover{background:var(--brand2);}
+  .err{
+    background:var(--err-bg); border:1px solid var(--err-line);
+    color:var(--err-ink); border-radius:8px; padding:10px 13px;
+    margin:18px 0 0; font-size:.88rem;
+  }
+  .foot{text-align:center; margin-top:22px; color:var(--muted); font-size:.78rem; line-height:1.6;}
+  .sub{text-align:center; color:var(--muted); font-size:.8rem; margin-top:4px;}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="logo">🐇</div>
+      <h1>The Warren</h1>
+    </div>
+    <div class="card">
+      <h2>Sign in to Lapin Logistics</h2>
+      <p class="lede">Use your internal workspace credentials to continue.</p>
+
+      {% if error %}
+        <div class="err">{{ error }}</div>
+      {% endif %}
+
+      <form method="post" action="/login" autocomplete="off">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username"
+               placeholder="firstname.lastname" autofocus>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Sign in</button>
+      </form>
+    </div>
+    <div class="foot">
+      The Warren is for Lapin Logistics employees only.<br>
+      Trouble signing in? Ask in #it-helpdesk once you're on.
+    </div>
+    <div class="sub">© Lapin Logistics — internal use only</div>
+  </div>
+</body>
+</html>

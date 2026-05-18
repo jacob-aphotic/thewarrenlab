@@ -1,0 +1,9 @@
+Lapin Logistics — VPN Setup Guide
+=================================
+
+1. Install the VPN client from the IT software portal.
+2. Import the profile IT emailed you on your first day.
+3. Authenticate with your directory credentials.
+4. The VPN is required for any internal system off-site.
+
+Trouble connecting? Raise a ticket with IT (roger.rabbit@lapinlogistics.com).

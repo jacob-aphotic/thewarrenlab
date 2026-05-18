@@ -1,0 +1,92 @@
+/* CarrotMart storefront — shared styles. Delivering crisp produce since 1973. */
+:root {
+  --carrot: #ed7014;
+  --carrot-dark: #c1570a;
+  --leaf: #4a7c2f;
+  --cream: #fff8ef;
+  --ink: #2e2218;
+  --muted: #7a6a58;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  line-height: 1.6;
+}
+a { color: var(--carrot-dark); }
+header.site {
+  background: var(--carrot);
+  color: #fff;
+  padding: 18px 0;
+  border-bottom: 5px solid var(--carrot-dark);
+}
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; }
+.brand { font-size: 1.6rem; font-weight: 800; letter-spacing: .5px; text-decoration: none; color: #fff; }
+.brand small { display: block; font-size: .7rem; font-weight: 400; opacity: .9; letter-spacing: 2px; }
+nav.main a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 22px;
+  font-weight: 600;
+  font-size: .95rem;
+}
+nav.main a:hover { text-decoration: underline; }
+nav.main a.active { text-decoration: underline; font-weight: 800; }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 22px; }
+main.wrap { padding-top: 34px; padding-bottom: 60px; }
+.hero {
+  background: linear-gradient(135deg, #ffd9b0, #ffe9d2);
+  border: 1px solid #f0c89a;
+  border-radius: 10px;
+  padding: 42px 36px;
+  margin-bottom: 34px;
+}
+.hero h1 { margin: 0 0 8px; font-size: 2.1rem; color: var(--carrot-dark); }
+.hero p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+h2 { color: var(--leaf); border-bottom: 2px solid #e7dccb; padding-bottom: 6px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.card {
+  background: #fff;
+  border: 1px solid #ecdfca;
+  border-radius: 8px;
+  padding: 18px;
+}
+.card h3 { margin-top: 0; color: var(--carrot-dark); }
+table.team { width: 100%; border-collapse: collapse; background: #fff; }
+table.team th, table.team td { text-align: left; padding: 10px 12px; border-bottom: 1px solid #ecdfca; }
+table.team th { background: #faefdd; color: var(--leaf); }
+.hint { color: var(--muted); font-size: .9rem; }
+.btn {
+  display: inline-block;
+  background: var(--carrot);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover { background: var(--carrot-dark); }
+input[type=text], input[type=password], input[type=email], textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d8c7ad;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin: 6px 0 16px;
+  font-family: inherit;
+}
+.notice { background: #fff3e0; border: 1px solid #f0c89a; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+.error { background: #fdecea; border: 1px solid #f5b8b2; color: #8a1f17; border-radius: 6px; padding: 12px 16px; margin: 16px 0; }
+footer.site {
+  background: #2e2218;
+  color: #d8c7ad;
+  text-align: center;
+  padding: 24px 0;
+  font-size: .85rem;
+}
+footer.site a { color: #f0a868; }
+.login-box { max-width: 380px; margin: 0 auto; background: #fff; border: 1px solid #ecdfca; border-radius: 10px; padding: 30px; }

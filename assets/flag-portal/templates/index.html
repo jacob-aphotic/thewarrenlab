@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lapin Logistics — Golden Carrot Submission</title>
+  <style>
+    /* ------------------------------------------------------------------ */
+    /* Design tokens                                                        */
+    /* ------------------------------------------------------------------ */
+    :root {
+      --bg:          #0e0f12;
+      --surface:     #16181e;
+      --surface-alt: #1d2029;
+      --border:      #2a2d38;
+      --accent:      #f5a623;   /* golden carrot amber */
+      --accent-dim:  #a86e10;
+      --accent-glow: rgba(245,166,35,0.18);
+      --green:       #3ecf74;
+      --green-dim:   rgba(62,207,116,0.12);
+      --red:         #e05252;
+      --red-dim:     rgba(224,82,82,0.12);
+      --text:        #d8dae8;
+      --text-muted:  #6b7080;
+      --radius:      10px;
+      --font:        'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Reset + base                                                         */
+    /* ------------------------------------------------------------------ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1rem 4rem;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Header                                                               */
+    /* ------------------------------------------------------------------ */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-size: 3.2rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 0 18px var(--accent));
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .subtitle {
+      margin-top: 0.35rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Main card layout                                                     */
+    /* ------------------------------------------------------------------ */
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Progress tally                                                       */
+    /* ------------------------------------------------------------------ */
+    .tally-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .tally-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .tally-count {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .slots {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .slot {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.65rem 0.9rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .slot.captured {
+      border-color: var(--green);
+      box-shadow: 0 0 0 1px rgba(62,207,116,0.15), inset 0 0 18px rgba(62,207,116,0.06);
+    }
+
+    .slot-icon {
+      font-size: 1.15rem;
+      flex-shrink: 0;
+      width: 1.5rem;
+      text-align: center;
+    }
+
+    .slot-name {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .slot-status {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .slot.captured .slot-status {
+      color: var(--green);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Progress bar                                                         */
+    /* ------------------------------------------------------------------ */
+    .progress-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 4px;
+      margin-bottom: 1.8rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Divider                                                              */
+    /* ------------------------------------------------------------------ */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 1.6rem;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Submission form                                                      */
+    /* ------------------------------------------------------------------ */
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 0.92rem;
+      padding: 0.6rem 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]::placeholder {
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.85rem;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    button[type="submit"] {
+      background: var(--accent);
+      border: none;
+      border-radius: 7px;
+      color: #0e0f12;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.6rem 1.2rem;
+      white-space: nowrap;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+
+    button[type="submit"]:hover {
+      background: #ffc04a;
+      box-shadow: 0 0 14px var(--accent-glow);
+    }
+
+    button[type="submit"]:active {
+      background: var(--accent-dim);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Message banner                                                       */
+    /* ------------------------------------------------------------------ */
+    .message {
+      margin-top: 1rem;
+      border-radius: 7px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .message.success {
+      background: var(--green-dim);
+      border: 1px solid var(--green);
+      color: var(--green);
+    }
+
+    .message.error {
+      background: var(--red-dim);
+      border: 1px solid var(--red);
+      color: var(--red);
+    }
+
+    .msg-icon { flex-shrink: 0; font-size: 1rem; }
+
+    /* ------------------------------------------------------------------ */
+    /* Celebration overlay (pure CSS, no JS)                               */
+    /* ------------------------------------------------------------------ */
+    .celebrate {
+      margin-top: 1.2rem;
+      text-align: center;
+      animation: pop 0.35s cubic-bezier(.36,2,.5,1) both;
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    .celebrate-emoji { font-size: 2.8rem; display: block; }
+    .celebrate-text  {
+      margin-top: 0.4rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* All-done state                                                       */
+    /* ------------------------------------------------------------------ */
+    .all-done {
+      margin-top: 1.4rem;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(245,166,35,0.08);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+    }
+
+    .all-done-emoji { font-size: 2.4rem; }
+    .all-done p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /* Footer                                                               */
+    /* ------------------------------------------------------------------ */
+    footer {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🥕</div>
+    <h1>Golden Carrot Submission</h1>
+    <p class="subtitle">Lapin Logistics &mdash; Internal Operations Portal</p>
+  </header>
+
+  <div class="card">
+
+    <!-- Progress tally -->
+    <div class="tally-header">
+      <span class="tally-label">Captured</span>
+      <span class="tally-count">{{ count }} / {{ total }}</span>
+    </div>
+
+    <div class="slots">
+      {% for slot in slots %}
+      <div class="slot {% if slot.captured %}captured{% endif %}">
+        <span class="slot-icon">{% if slot.captured %}🐇{% else %}⬜{% endif %}</span>
+        <span class="slot-name">{{ slot.label }}</span>
+        <span class="slot-status">{% if slot.captured %}Captured{% else %}Pending{% endif %}</span>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill"
+           style="width: {{ (count / total * 100)|int }}%"></div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Submission form -->
+    <label class="form-label" for="flag-input">Submit a flag</label>
+    <form method="POST" action="/" autocomplete="off">
+      <div class="form-row">
+        <input
+          type="text"
+          id="flag-input"
+          name="flag"
+          placeholder="Paste flag here…"
+          spellcheck="false"
+          autocorrect="off"
+          autocapitalize="off"
+          required
+        />
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
+    <!-- Result message -->
+    {% if message %}
+      {% if message_type == 'success' and matched_label %}
+        <!-- New capture celebration -->
+        <div class="celebrate">
+          <span class="celebrate-emoji">🎉🥕🐰</span>
+          <p class="celebrate-text">{{ message }}</p>
+        </div>
+      {% elif message_type == 'success' %}
+        <div class="message success">
+          <span class="msg-icon">✔</span>
+          <span>{{ message }}</span>
+        </div>
+      {% else %}
+        <div class="message error">
+          <span class="msg-icon">✖</span>
+          <span>{{ message }}</span>
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <!-- All done -->
+    {% if count == total %}
+    <div class="all-done">
+      <div class="all-done-emoji">🏆🥕</div>
+      <p>All flags collected. Outstanding fieldwork.</p>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <footer>Lapin Logistics &copy; Internal Systems &mdash; Authorised Personnel Only</footer>
+
+</body>
+</html>
