@@ -1,4 +1,4 @@
-# 🐰 The Warren OSCP Lab
+<img width="1983" height="793" alt="ChatGPT Image May 20, 2026, 02_44_36 PM" src="https://github.com/user-attachments/assets/dfcc6de3-dac5-4f66-910a-e3d5ef22f3d9" />
 
 > *"Delivering crisp produce since 1973."* — Lapin Logistics
 
