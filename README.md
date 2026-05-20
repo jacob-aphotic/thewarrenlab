@@ -34,7 +34,7 @@ No exotic exploits, no kernel CVEs, no guessing games. Everything is reachable f
 ```bash
    sudo ./install.sh --verify
 ```
-6. Grab the target IP from the banner and go hunt from your attacker box (Kali or whatever you like).
+6. Grab the target IP from the banner and go hunt from your attacker box (Kali or whatever you like). Make sure the network config is setup properly (eg. bridged adaptors) so the machine is reachable from your Kali box.
 
 Teardown:
 ```bash
