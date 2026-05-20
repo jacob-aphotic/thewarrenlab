@@ -19,7 +19,7 @@ No exotic exploits, no kernel CVEs, no guessing games. Everything is reachable f
 
 ## Setup
 
-1. Spin up a fresh **Ubuntu VM** (disposable — see warning below). Debian-family should also work.
+1. Spin up a fresh **Ubuntu VM** (disposable — see warning below). Debian-family should also work. Make sure SSH server is installed during the setup.
 2. Clone this repo onto the VM:
 ```bash
    git clone https://github.com/jacob-aphotic/thewarrenlab.git
